@@ -6,7 +6,9 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/AuthApp', {
+
+
+mongoose.connect('mongodb+srv://admin_01:fBv5Q3BmFIsyOhk6@cluster0-px2ay.mongodb.net/test?retryWrites=true&w=majority', {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 });
