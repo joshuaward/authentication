@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const config = require('../config/config').get(process.env.NODE_ENV);
 
 const SALT_I = 10;
 
@@ -47,7 +48,7 @@ userSchema.methods.comparePassword = function(candidatePassword, callback) {
 
 userSchema.methods.generateToken = function(callback) {
 	var user = this;
-	let token = jwt.sign(user._id.toHexString(), 'supersecret');
+	let token = jwt.sign(user._id.toHexString(), config.SECRET);
 
 	user.token = token;
 	user.save(function(err, user) {
@@ -58,7 +59,7 @@ userSchema.methods.generateToken = function(callback) {
 
 userSchema.statics.findByToken = function(token, callback) {
 	var user = this;
-	jwt.verify(token, 'supersecret', (err, decode) => {
+	jwt.verify(token, config.SECRET, (err, decode) => {
 		user.findOne({'_id': decode, 'token': token}, (err, user) => {
 			if(err) return callback(err);
 			callback(null, user);

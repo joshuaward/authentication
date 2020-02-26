@@ -3,12 +3,11 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
+const config = require('./config/config').get(process.env.NODE_ENV);
 
 const app = express();
 
-
-
-mongoose.connect('mongodb+srv://admin_01:fBv5Q3BmFIsyOhk6@cluster0-px2ay.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(config.DATABASE, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 });
